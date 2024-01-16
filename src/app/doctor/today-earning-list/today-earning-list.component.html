@@ -1,0 +1,98 @@
+<div>
+    <mat-drawer-container class="admincon-container" autosize>
+        <mat-drawer #drawer class="adminside-sidenav" mode="side">
+            <app-doctor-sidenavbar></app-doctor-sidenavbar>
+        </mat-drawer>
+        <button class="togglebutton" mat-button (click)="drawer.toggle()">
+            <i class="icons" (click)="clickEvent()" [ngClass]="status ? 'icon-close' : 'icon-menu'"></i>
+        </button>
+        <div class="right-section">
+            <app-doctor-header></app-doctor-header>
+            <div class="admin-main-container">
+                <h3>Doctor</h3>
+                <div class="dashboard-container mt-4">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card shadow-sm rounded mb-4">
+                                <div class="card-header">
+                                    <div class="d-flex justify-content-between">
+                                        <h6>Today Earning list</h6>
+                                        <div class="filterfields">
+                                            <div class="resion-select">
+                                            </div>
+                                        </div>
+                                        <div class="filterfields">
+                                            <input class="form-control" matInput placeholder="Filter" #input>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mat-elevation-z8">
+                                    <table mat-table [dataSource]="dataSource">
+
+                                        <!-- Position Column -->
+                                        <ng-container matColumnDef="id">
+                                            <th mat-header-cell *matHeaderCellDef> Id </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                                        </ng-container>
+
+                                        <!-- Name Column -->
+                                        <ng-container matColumnDef="date">
+                                            <th mat-header-cell *matHeaderCellDef> Date </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.date | date:"dd/mm/yyyy"}}
+                                            </td>
+                                        </ng-container>
+
+                                        <!-- Weight Column -->
+                                        <ng-container matColumnDef="time">
+                                            <th mat-header-cell *matHeaderCellDef> Time </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.time}} </td>
+                                        </ng-container>
+
+                                        <!-- Symbol Column -->
+                                        <ng-container matColumnDef="name">
+                                            <th mat-header-cell *matHeaderCellDef> Name </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.name | uppercase}} </td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="mobile_number">
+                                            <th mat-header-cell *matHeaderCellDef> Mobile Number </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.mobile_number}} </td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="email">
+                                            <th mat-header-cell *matHeaderCellDef> Email </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="city">
+                                            <th mat-header-cell *matHeaderCellDef>City </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.city}} </td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="nature_of_visit">
+                                            <th mat-header-cell *matHeaderCellDef> Nature </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.nature_of_visit}} </td>
+                                        </ng-container>
+
+
+                                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                    </table>
+
+                                    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                                        aria-label="Select page of periodic elements" [length]="200" [pageSize]="5">
+                                    </mat-paginator>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <app-footer> </app-footer>
+        </div>
+    </mat-drawer-container>
+    <div class="pageloader" *ngIf="isloading">
+        <img src="../../../assets/images/loader.svg"/>
+      </div>

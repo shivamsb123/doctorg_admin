@@ -1,0 +1,105 @@
+<mat-drawer-container class="admincon-container" autosize>
+  <mat-drawer #drawer class="adminside-sidenav" mode="side">
+    <app-clinic-sidenavbar></app-clinic-sidenavbar>
+  </mat-drawer>
+  <button class="togglebutton" mat-button (click)="drawer.toggle()">
+    <i class="icons" (click)="clickEvent()" [ngClass]="status ? 'icon-close' : 'icon-menu'"></i>
+  </button>
+  <div class="right-section">
+    <app-clinic-header></app-clinic-header>
+
+  <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading ...</p>
+  </ngx-spinner>
+    <div class="admin-main-container">
+      <div class="dashboard-container mt-4">
+        <h3 class="mb-3">Add Test</h3>
+        <div class="row">
+          <div class="container col-md-12">
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <form [formGroup]="ngForm">
+
+                  <div class="medi-form">
+                    <div class="row">
+                      <div class="col-md-9 mb-3">
+                        <div class="row">
+                          <div class="col-md-4">
+                            <label>Test</label>
+                            <input type="text" placeholder="Test" class="form-control" formControlName="test_name">
+                          </div>
+                          <div class="col-md-4">
+                            <label>Price</label>
+                            <input type="text" placeholder="Price" class="form-control" formControlName="price">
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <button type="submit" class="btn btn-primary" (click)="submitForm(ngForm.value)">submit</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+
+            <div class="dashboard-container mt-4">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="card shadow-sm rounded mb-4">
+                    <div class="card-header">
+                      <div class="d-flex justify-content-between">
+                        <h6>Test List</h6>
+
+                        <div class="filterfields">
+                          <input class="form-control" matInput placeholder="Filter" #input>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="mat-elevation-z8 p-2">
+                      <table mat-table [dataSource]="dataSource">
+
+                        <ng-container matColumnDef="id">
+                          <th mat-header-cell *matHeaderCellDef> Id </th>
+                          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="test_name">
+                          <th mat-header-cell *matHeaderCellDef> Test </th>
+                          <td mat-cell *matCellDef="let element"> {{element.test_name}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="price">
+                          <th mat-header-cell *matHeaderCellDef> Price </th>
+                          <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+                        </ng-container>
+
+
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                      </table>
+                      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                        aria-label="Select page of periodic elements" [length]="200" [pageSize]="5">
+                      </mat-paginator>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <app-footer> </app-footer>
+  </div>
+
+</mat-drawer-container>
+
+<div class="pageloader" *ngIf="isloading">
+  <img src="../../../assets/images/loader.svg"/>
+</div>

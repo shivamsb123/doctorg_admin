@@ -1,0 +1,45 @@
+<mat-drawer-container class="admincon-container" autosize>
+  <mat-drawer #drawer class="adminside-sidenav" mode="side">
+    <app-doctor-sidenavbar></app-doctor-sidenavbar>
+  </mat-drawer>
+  <button class="togglebutton" mat-button (click)="drawer.toggle()">
+    <i class="icons" (click)="clickEvent()" [ngClass]="status ? 'icon-close' : 'icon-menu'"></i>
+  </button>
+  <div class="right-section">
+    <app-doctor-header></app-doctor-header>
+    <!-- <app-navbar></app-navbar> -->
+    <div class="admin-main-container">
+      <div class="dashboard-container mt-4">
+        <h3 class="mb-3">Add Se</h3>
+        <div class="container1">
+          <form [formGroup]="ngForm">
+            <div class="row">
+              <div class="col-md-12">
+                <!-- <h2>Panel Heading</h2> -->
+                <div class="card shadow-sm smallcard">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-8 mb-3" *ngFor="let more of getmoreFormControls(); let i = index">
+                        <label> Se Name :</label><br>
+                        <input type="text" class="form-control" [formControl]="more">
+                      </div>
+                      <div class="col-md-4 align-self-end mb-3">
+                        <button type="submit" class="btn btn-success rounded-pill" (click)="addMore()">Add More</button>
+                      </div>
+                    </div>
+
+                    <span class="span2">
+                      <div>
+                        <button type="submit" class="btn btn-primary" (click)="addSeData()">Add Se</button>
+                      </div>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-drawer-container>

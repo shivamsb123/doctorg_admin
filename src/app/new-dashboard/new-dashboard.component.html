@@ -1,0 +1,146 @@
+<mat-drawer-container class="admincon-container" autosize>
+  <mat-drawer #drawer class="adminside-sidenav" mode="side">
+    <app-sidenav></app-sidenav>
+  </mat-drawer>
+  <button class="togglebutton" mat-button (click)="drawer.toggle()">
+    <i class="icons" (click)="clickEvent()" [ngClass]="status ? 'icon-close' : 'icon-menu'"></i>
+  </button>
+  <div class="right-section">
+    <app-header></app-header>
+    <div class="admin-main-container">
+      <h3>Clinic</h3>
+      <div class="dashboard-container mt-4">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card shadow-sm rounded mb-4">
+              <div class="card-header">
+                <div class="d-flex justify-content-between">
+                  <h6>Clinic List</h6>
+                  <div class="filterfields">
+                    <div class="resion-select">
+
+                      <button type="button" class="btn btn-primary" [routerLink]="['/create-clinic']">Create
+                        Clinic</button>
+                    </div>
+                  </div>
+                  <div class="filterfields">
+                    <input class="form-control" matInput placeholder="Filter" #input>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mat-elevation-z8">
+                <table mat-table [dataSource]="dataSource">
+
+                  <!-- Position Column -->
+                  <ng-container matColumnDef="clinic_name">
+                    <th mat-header-cell *matHeaderCellDef>  Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.clinic_name}} </td>
+                  </ng-container>
+
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="clinic_registration_no">
+                    <th mat-header-cell *matHeaderCellDef>  Registration No. </th>
+                    <td mat-cell *matCellDef="let element"> {{element.clinic_registration_no}} </td>
+                  </ng-container>
+
+                  <!-- Weight Column -->
+                  <ng-container matColumnDef="clinic_owner_name">
+                    <th mat-header-cell *matHeaderCellDef>  Owner Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.clinic_owner_name}} </td>
+                  </ng-container>
+
+                  <!-- Symbol Column -->
+                  <ng-container matColumnDef="clinic_mobile_number">
+                    <th mat-header-cell *matHeaderCellDef>  Mobile Number </th>
+                    <td mat-cell *matCellDef="let element"> {{element.clinic_mobile_number}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="clinic_phone_number">
+                    <th mat-header-cell *matHeaderCellDef>  Phone Number </th>
+                    <td mat-cell *matCellDef="let element"> {{element.clinic_phone_number}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef> Email </th>
+                    <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="password">
+                    <th mat-header-cell *matHeaderCellDef>Password </th>
+                    <td mat-cell *matCellDef="let element"> {{element.password}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="clinic_area">
+                    <th mat-header-cell *matHeaderCellDef> Area </th>
+                    <td mat-cell *matCellDef="let element"> {{element.clinic_area}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="clinic_city">
+                    <th mat-header-cell *matHeaderCellDef>  City </th>
+                    <td mat-cell *matCellDef="let element"> {{element.clinic_city}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="clinic_state">
+                    <th mat-header-cell *matHeaderCellDef>  State </th>
+                    <td mat-cell *matCellDef="let element"> {{element.clinic_state}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="clinic_pin_code">
+                    <th mat-header-cell *matHeaderCellDef>  Pin Code </th>
+                    <td mat-cell *matCellDef="let element"> {{element.clinic_pin_code}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="Action">
+                    <th mat-header-cell *matHeaderCellDef>  Action </th>
+                    <td mat-cell *matCellDef="let element">
+                      <div class="d-flex">
+                        <mat-slide-toggle [checked]="element.active_status == 1 ? true : false"  (change)="activeStatus(element,$event)"></mat-slide-toggle>&nbsp;
+                       <i class="fa fa-edit ml-2" style="font-size:18px" [routerLink]="['/create-clinic', element.id]"></i>&nbsp;
+                      <i class="fa fa-trash ml-2" style="font-size:18px;color:red"  data-toggle="modal" data-target="#exampleModal" (click)="deleteClinic(element)"></i>
+                      </div>
+                    </td>
+
+                  </ng-container>
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+
+                <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                  aria-label="Select page of periodic elements"
+                  [length]="200" [pageSize]="5">
+                </mat-paginator>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <app-footer> </app-footer>
+  </div>
+</mat-drawer-container>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Delete Clinic</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h5>Do YOU WANT TO DELETE ??</h5>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="deleteClinicByid()" data-dismiss="modal">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="pageloader" *ngIf="isloading">
+  <img src="../../assets/images/loader.svg"/>
+</div>

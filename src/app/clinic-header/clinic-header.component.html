@@ -1,0 +1,31 @@
+<div class="admin-header">
+    <div class="d-flex bd-highlight">
+        <div class="px-2 flex-grow-1 bd-highlight">
+
+        </div>
+
+        <div class="px-2 bd-highlight">
+            <div class="header-right">
+                <ul class="list-inline mb-0">
+           
+                   
+                    <li class="list-inline-item">
+                        <button mat-button [matMenuTriggerFor]="WelUser" class="loggeduser">
+                            <i class="icon-user icons"></i> <span>Welcome  </span> <i
+                                class="icon-arrow-down icons"></i>
+                        </button>
+                        <mat-menu #WelUser="matMenu" xPosition="before">
+                            <!-- <button mat-menu-item >My Profile</button> -->
+                            <!-- routerLink="/add" -->
+                            <!-- (click)="editprofile(profiledata) -->
+                            <!-- <button mat-menu-item (click)="editprofile(profiledata)">पासवर्ड बदलें</button> -->
+                            <button mat-menu-item (click)="logout()">LogOut</button>
+                        </mat-menu>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+</div>

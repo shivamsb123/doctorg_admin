@@ -1,0 +1,98 @@
+<div class="admin-sidenav">
+    <div class="inner-logo">
+        <span class="short-logo"><img src="../../assets/images/logo.svg" style="width: 60px;" /></span>
+        <span class="long-logo"><img src="../../assets/images/logo.svg" style="width: 100px;" /></span>
+    </div>
+
+    <div class="sidemenubar">
+        <ul class="list-unstyled">
+            <li>
+                <a routerLink="/dashboard"><i class="icon-grid icons"></i> <span>Dashboard</span></a>
+            </li>
+            <!-- <li>
+            <a (click)="tabToggle1()" [ngClass]="{activemenu : showTab1===true}">
+                <i class="icon-menu icons"></i> <span>Common Menu</span></a>
+            <div *ngIf="showTab1" class="sunsidenav">
+                <div class="closesbmenu" (click)="clsubmenu()">
+                    <mat-icon aria-hidden="false" aria-label="close icon">close</mat-icon>
+                </div>
+                <ul class="list-unstyled">
+                    <li><a href="#"><i class="icon-settings icons"></i> Site Settings</a></li>
+                    <li><a href="#"><i class="icon-lock icons"></i> Change Password</a></li>
+                    <li><a href="#"><i class="icon-control-end icons"></i> Content</a></li>
+                    <li><a href="#"><i class="icon-envelope icons"></i> Email Templates</a></li>
+                    <li><a href="#"><i class="icon-ban icons"></i> Manage Abuse Keywords</a></li>
+                </ul>
+            </div>
+        </li> -->
+            <!-- <li>
+            <a (click)="tabToggle2()" [ngClass]="{activemenu : showTab2===true}">
+                <i class="icon-people icons"></i> <span>Manage Users</span></a>
+            <div *ngIf="showTab2" class="sunsidenav">
+                <div class="closesbmenu" (click)="clsubmenu()">
+                    <mat-icon aria-hidden="false" aria-label="close icon">close</mat-icon>
+                </div>
+                <ul class="list-unstyled">
+                    <li><a href="#"><i class="icon-people icons"></i> Manage User</a></li>
+                    <li><a href="#"><i class="icon-user-follow icons"></i> Manage Admin Account</a></li>
+                </ul>
+            </div>
+        </li> -->
+  
+
+
+
+            <!-- <li>
+                <a (click)="tabToggle4()" [ngClass]="{activemenu : showTab4===true}">
+                    <i class="icon-speech icons"></i> <span>Newsletter</span>
+                </a>
+                <div *ngIf="showTab4" class="sunsidenav">
+                    <div class="closesbmenu" (click)="clsubmenu()">
+                        <mat-icon aria-hidden="false" aria-label="close icon">close</mat-icon>
+                    </div>
+                    <ul class="list-unstyled">
+                        <li><a href="#"><i class="icon-speech icons"></i> Manage Newsletters</a></li>
+                        <li><a href="#"><i class="icon-lock icons"></i> Manage subscribers</a></li>
+                    </ul>
+                </div>
+            </li> -->
+
+
+
+            <!-- <li><a href="#"><i class="icon-envelope icons"></i> <span>Private Message</span></a></li> -->
+            <li *ngIf="decoded?.roleId==1"><a routerLink="/role-list"><i class="icon-credit-card icons" ></i> <span>Role List</span></a></li>
+            <!-- <li><a routerLink="/create-user"><i class="icon-user-following icons"></i> <span>Create Users</span></a> -->
+                <li  *ngIf="decoded?.roleId==1 || 2" ><a routerLink="/clinic-list"><i class="fa fa-users" aria-hidden="true"></i> <span>Clinic</span></a>    
+            </li>
+            <li *ngIf="decoded?.roleId==1"><a routerLink="/rolepermission"><i class="icon-user-following icons"></i> <span>Role Permission</span></a>    
+            </li>
+            <li ><a routerLink="/blog"><i class="fa fa-building"></i> <span>Blog</span></a>    
+            </li>
+            <li ><a routerLink="/contact-list"><i class="fa fa-list"></i> <span>Contact</span></a>    
+            </li>
+         
+            <!-- <li *ngIf="decoded?.roleId==1"><a routerLink="/details"> <i class="fa fa-building" aria-hidden="true"></i><span>ब्लॉक जोड़ें</span></a>    
+            </li> -->
+            <li>
+                
+
+                
+                <!-- <a (click)="tabToggle5()" [ngClass]="{activemenu : showTab5===true}">
+                    <i class="icon-pencil icons"></i> <span>Form Themes</span>
+                </a> -->
+                <!-- <div *ngIf="showTab5" class="sunsidenav">
+                    <div class="closesbmenu" (click)="clsubmenu()">
+                        <mat-icon aria-hidden="false" aria-label="close icon">close</mat-icon>
+                    </div>
+                    <ul class="list-unstyled">
+                        <li><a routerLink="/formsTheme"><i class="icon-speech icons"></i> Form Themes</a></li>
+                        <li><a routerLink="/button-model"><i class="icon-game-controller icons"></i> Buttons &
+                                Models</a></li>
+                        <li><a routerLink="/TablesDesign"><i class="icon-game-controller icons"></i> Tables</a></li>
+                        <li><a routerLink="/Datatable"><i class="icon-game-controller icons"></i> Data Tables</a></li>
+                    </ul>
+                </div> -->
+            </li>
+        </ul>
+    </div>
+</div>

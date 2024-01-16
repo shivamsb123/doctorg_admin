@@ -1,0 +1,10 @@
+.tableprint td {border: 0; padding: 0; text-align: left !important; color: #000;}
+.tableprint td h4 {font-size: 18px;font-weight: 600;}
+.tableprint td h5 {font-size: 16px;}
+.tableprint td p {font-size: 14px;}
+/* .printinfo {display: none;} */
+.thnkyv {display: none; text-align: center;    margin-top: 50px;}
+@media print {
+    .printinfo {display: block;margin-bottom: 14px;}
+    .thnkyv {display: block; text-align: center;}
+} 

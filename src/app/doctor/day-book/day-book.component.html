@@ -1,0 +1,144 @@
+<mat-drawer-container class="admincon-container" autosize>
+    <mat-drawer #drawer class="adminside-sidenav" mode="side">
+        <app-doctor-sidenavbar></app-doctor-sidenavbar>
+    </mat-drawer>
+    <button class="togglebutton" mat-button (click)="drawer.toggle()">
+        <i class="icons" (click)="clickEvent()" [ngClass]="status ? 'icon-close' : 'icon-menu'"></i>
+    </button>
+    <div class="right-section">
+        <app-doctor-header></app-doctor-header>
+
+        <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+            <p style="font-size: 20px; color: white">Loading ...</p>
+        </ngx-spinner>
+        <div class="admin-main-container">
+            <div class="dashboard-container mt-4">
+                <h3 class="mb-3">Day Book</h3>
+                <div class="row">
+                    <div class="container col-md-12">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <div class="medi-form">
+                                    <div class="row">
+                                        <div class="col-md-12 mb-3">
+                                            <form [formGroup]="dayBookForm"
+                                                (ngSubmit)="submitDaybook(dayBookForm.value)">
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <label>From Date</label>
+                                                        <input type="date" class="form-control"
+                                                            placeholder="Select Date" formControlName="fromDate" />
+                                                        <div class="text-danger" *ngIf="dayBookForm.get('fromDate')?.hasError('required') && 
+                                                           dayBookForm.get('fromDate')?.touched">
+                                                            fromDate is required</div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label>To Date</label>
+                                                        <input type="date" class="form-control"
+                                                            placeholder="Select Date" formControlName="toDate" />
+                                                        <div class="text-danger" *ngIf="dayBookForm.get('toDate')?.hasError('required') && 
+                                                              dayBookForm.get('toDate')?.touched">
+                                                            toDate is required</div>
+                                                    </div>
+
+                                                    <div class="col-md-3">
+                                                        <label>Select Test Name</label>&nbsp;
+                                                        <ng-multiselect-dropdown [placeholder]="'Select Test Name'"
+                                                            formControlName="dropDown" [settings]="dropdownSettings"
+                                                            [data]="testArr" (onSelect)="onItemSelect($event)"
+                                                            (onSelectAll)="onSelectAll($event)">
+                                                        </ng-multiselect-dropdown>
+                                                    </div>
+                                                    <div class="col-md-3 mt-4">
+                                                        <div>
+                                                            <button type="submit"
+                                                                class="btn btn-primary">submit</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </form>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="card shadow-sm mt-3">
+                                        <div class="card-body"  id="demo">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <!-- <th scope="col">Sr</th> -->
+                                                        <th scope="col">Patient Name</th>
+                                                        <th scope="col">Billing Date</th>
+                                                        <th scope="col">Particular Name</th>
+                                                        <th scope="col">Fees</th>
+                                                        <th scope="col">Discount</th>
+                                                        <th scope="col">Amount</th>  
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let test of testBillingArr;index as i">
+                                                        <!-- <th scope="row">{{i+1}}</th> -->
+                                                        <td>{{test.patient_name}}</td>
+                                                        <td>{{test.createdAt | date:"dd/MM/yyyy"}}</td>
+                                                        <td>{{test.test_name}}</td>
+                                                        <td>{{test.price}}</td>
+                                                        <td>{{test.price - test.total}}</td>
+                                                        <td>{{test.total}}</td>
+                                                    </tr>
+                                                    <tr *ngFor="let test of appointmentArr;index as i">
+                                                        <!-- <th scope="row">{{i+1}}</th> -->
+                                                        <td>{{test.name}}</td>
+                                                        <td>{{test.date | date:"dd/MM/yyyy"}}</td>
+                                                        <td> Appointment fees</td>
+                                                        <td>{{test.fees}}</td>
+                                                        <td>0</td>
+                                                        <td>{{test.fees}}</td>
+                                                    </tr>
+
+                                                    <tr *ngIf="testBillingArr.length || appointmentArr.length">
+<!-- 
+                                                        <td></td>
+                                                        <td></td> -->
+
+                                                        <td colspan="3"><h5>Total</h5></td>
+                                                        <td ><h5>{{isBillingSum + isAppointmentSum}}</h5></td>
+                                                        <td><h5>{{isBillingDiscount}}</h5></td>
+                                                        <td><h5>{{isTotalAmount + isAppointmentSum}}</h5></td>
+
+
+                                                    </tr>
+                                                    <tr *ngIf="testBillingArr.length || appointmentArr.length">
+<!-- 
+                                                        <td></td>
+                                                        <td></td> -->
+
+                                                        <td colspan="3"><h5>Grand Total</h5></td>
+                                                        <td><h5>{{isBillingSum + isAppointmentSum}}</h5></td>
+                                                        <td><h5>{{isBillingDiscount}}</h5></td>
+                                                        <td><h5>{{isTotalAmount + isAppointmentSum}}</h5></td>
+
+
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+        
+                                        </div>
+                                        <div class="text-center mt-3">
+                                            <button type="button" class="btn btn-success" (click)="onPrint('demo')">Save & Print</button>
+                                          </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <app-footer> </app-footer>
+    </div>
+
+</mat-drawer-container>

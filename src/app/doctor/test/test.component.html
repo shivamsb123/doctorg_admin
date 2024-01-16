@@ -1,0 +1,47 @@
+<!-- <p>doctor-dashboard works!</p> -->
+<mat-drawer-container class="admincon-container" autosize>
+  <mat-drawer #drawer class="adminside-sidenav" mode="side">
+    <app-clinic-sidenavbar></app-clinic-sidenavbar>
+  </mat-drawer>
+  <button class="togglebutton" mat-button (click)="drawer.toggle()">
+    <i class="icons" (click)="clickEvent()" [ngClass]="status ? 'icon-close' : 'icon-menu'"></i>
+  </button>
+  <div class="right-section">
+    <app-clinic-header></app-clinic-header>
+
+  <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading ...</p>
+  </ngx-spinner>
+      <div class="admin-main-container">
+        <div class="dashboard-container mt-5">
+         
+            <div class="row d-boxlink" routerLink="/test-billing" >
+              <div class="col-md-3">
+                <a class="d-block">
+                  <div class="card shadow-sm rounded mb-4" style="background: #2680D9;">
+                    <div class="card-body py-4 px-4 d-boxcon">
+                       <h4>Billing Test</h4>
+                       <div class="count-no">0</div>
+                    </div>
+                  </div>
+                </a>
+              </div>
+  
+              <div class="col-md-3" routerLink="/test-master">
+                <a class="d-block">
+                  <div class="card shadow-sm rounded mb-4"  style="background: #f0ae90;">
+                    <div class="card-body py-4 px-4 d-boxcon">
+                       <h4>Master Test </h4>
+                       <div class="count-no" *ngIf="testArr">{{testArr.length?testArr.length:0}}</div>
+                    </div>
+                  </div>
+                </a>
+              </div>
+  
+            </div>
+            
+          </div>
+      </div>
+      <app-footer> </app-footer>
+    </div>
+  </mat-drawer-container>

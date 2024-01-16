@@ -1,0 +1,111 @@
+<mat-drawer-container class="admincon-container" autosize>
+    <mat-drawer #drawer class="adminside-sidenav" mode="side">
+      <app-sidenav></app-sidenav>
+    </mat-drawer>
+    <button class="togglebutton" mat-button (click)="drawer.toggle()">
+      <i class="icons" (click)="clickEvent()" [ngClass]="status ? 'icon-close' : 'icon-menu'"></i>
+    </button>
+  
+    <div class="right-section">
+  
+      <app-header></app-header>
+  
+  
+      <div class="admin-main-container">
+        <h3>Role Permission</h3>
+        <div class="dashboard-container mt-4">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card shadow-sm rounded mb-4">
+                <div class="card-header">
+                  <div class="d-flex justify-content-between">
+                    <h6>Role List</h6>
+                    <div class="filterfields">
+                      <div class="resion-select" [formGroup]="roleForm">
+                       
+                    
+                         <select class="form-select" formControlName="name" (change)="changeRole()">
+                          <option disabled selected="" value="">Role List</option>
+                          <option *ngFor="let data of roleList" [value]="data.id"> {{data.name}}</option>
+                           
+                          </select>
+                          <!-- Role Name = {{roleName?.name}} -->
+                        </div>
+                    </div>
+                    <div class="filterfields">
+                      <input class="form-control" matInput (keyup)="applyFilter($event)" placeholder="Filter" #input>
+                    </div>
+                  </div>
+                </div>
+                <div class="role-permission-table" [formGroup]="roleForm">
+                  <table class="table table-bordered" *ngIf="roleSelected">
+                    <thead>
+                      <tr>
+                        <th>S.No</th>
+                        <th>Module Name</th>
+                        <th>Add</th>
+                        <th>Update</th>
+                        <th>Delete</th>
+                        <th>View</th>
+                      <th>Download</th> 
+                      </tr>
+                    </thead>
+    
+                    <tbody *ngFor="let item of permissionRecord; let i = index">
+    
+                      <tr>
+                        <td> {{i+1}}</td>
+                        <!-- {{item.actionUrl}} -->
+                        <td class="font-size">{{item.name }}</td>
+    
+                        <td class="permission-check" >
+                          <mat-icon class="text-success" style="font-size: 20px;">add</mat-icon>
+                          <mat-checkbox [disabled]="inserted==false" [checked]='item.insert==true'
+                            (change)="change($event.checked,item,'Write')" class="example-margin">
+    
+                          </mat-checkbox> &nbsp;
+                        </td>
+                        <td class="permission-check" >
+                          <mat-icon class="text-secondary">edit</mat-icon>
+                          <mat-checkbox [disabled]="updated==false" [checked]="item.update == true"
+                            (change)="change($event.checked,item,'Edit')" class="example-margin">
+                          </mat-checkbox> &nbsp;
+                        </td>
+                        <td class="permission-check" >
+    
+                          <mat-icon class="text-danger">delete_outline</mat-icon>
+                          <mat-checkbox [disabled]="deleted==false" [checked]='item.delete==true'
+                            (change)="change($event.checked,item,'Delete')" class="example-margin">
+                          </mat-checkbox> &nbsp;
+                        </td>
+                        <td class="permission-check" >
+                          <mat-icon class="text-primary">remove_red_eye</mat-icon>
+                          <mat-checkbox [disabled]="views==false" [checked]='item.view==true'
+                            (change)="change($event.checked,item,'Read')" class="example-margin">
+    
+                          </mat-checkbox>
+                        </td>
+                     
+                        <td class="permission-check"  >
+                          <mat-icon class="text-primary">get_app</mat-icon>
+                          <mat-checkbox [disabled]="download==false" [checked]='item.download==true'
+                            (change)="change($event.checked,item,'Download')" class="example-margin">
+    
+                          </mat-checkbox>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+    
+  
+  
+      <app-footer> </app-footer>
+    </div>
+  </mat-drawer-container>

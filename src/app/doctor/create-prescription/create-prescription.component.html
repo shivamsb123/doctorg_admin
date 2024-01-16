@@ -1,0 +1,424 @@
+<mat-drawer-container class="admincon-container" autosize>
+    <mat-drawer #drawer class="adminside-sidenav" mode="side">
+      <app-doctor-sidenavbar></app-doctor-sidenavbar>
+    </mat-drawer>
+     <button class="togglebutton" mat-button (click)="drawer.toggle()"> 
+      <i class="icons" (click)="clickEvent()" [ngClass]="status ? 'icon-close' : 'icon-menu'"></i>
+    </button> 
+    <div class="right-section">
+      <app-doctor-header></app-doctor-header>
+      <!-- <app-navbar></app-navbar> -->
+      <div class="admin-main-container">
+        <div class="dashboard-container">
+
+          <div class="patient-des d-flex">
+            <a type="button" class="btn btn-link" data-toggle="modal" data-target="#complaintModal">Complaint</a>
+            <a type="button" class="btn btn-link" data-toggle="modal" data-target="#diagnosisModal">Diagnosis</a>
+            <a type="button" class="btn btn-link" data-toggle="modal" data-target="#investigationsModal">Investigation</a>
+            <a type="button" class="btn btn-link" data-toggle="modal" data-target="#seModal">S/E</a>
+            <a type="button" class="btn btn-link" data-toggle="modal" data-target="#bpModal">BP</a>
+          </div>
+          <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+            Launch demo modal
+          </button> -->
+
+          <div class="container1">
+            <form>
+            <div class="row">
+                <div class="col-md-4">
+                  <div class="card desease-n-section">
+                    <h5>Disease Name</h5>
+                    <div class="desease-btn">
+                      <div class="row">
+                        <div class="col-md-6" *ngFor="let dis of diseaseArr">
+                          <a  class="btn btn-link" data-toggle="modal" data-target="#addpresModal" (click)="getMedicine(dis)">{{dis.disease_name}}</a>
+                        </div>
+                       
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-8">
+                  <div class="card desease-n-section" >
+                      <div class="d-flex btn-psection mb-3">
+                        <button type="button" class="btn btn-success" (click)="onPrint('prescriptSection')">Save & Print</button>
+
+                        <div class="btnSections d-flex ml-auto">
+                          <div><a href="#" class="btn btn-primary mr-2" data-toggle="modal" data-target="#specialNotesModal">Add Special Notes</a></div>
+                          <div><a href="#" class="btn btn-primary" data-toggle="modal" data-target="#uploadFileModal">Upload Files</a></div>
+                        </div>
+                      </div>
+                    <div class="prescription-print-data" id="prescriptSection">
+                      <div class="text-right">Date: {{ todayDate| date}}</div>
+                      <div class="pre-patient-details d-flex">
+                          <p class="patientDetails">Name: <span>{{appointmentData.name}}</span></p>
+                          <p class="patientDetails" *ngIf="profileDataArr[0]">Age: <span>{{profileDataArr[0].age}}</span></p>
+                          <p class="patientDetails" *ngIf="profileDataArr[0]">Gender: <span>{{profileDataArr[0].gender}}</span></p>
+                          <p class="patientDetails">Token Number: <span>{{appointmentData.token_number }}</span></p>
+                      </div>
+
+                      <table class="table prescribetable">
+                        <tr>
+                          <td style="width: 40%;" class="pl-0">
+                            <div class="patient-daignosis" *ngIf="ischeckedInvestigationArr.length">
+                              <h6>Investigation <span class="fa fa-close"></span></h6>
+                              <ul class="list-unstyled mt-2">
+                                <div *ngFor="let i of ischeckedInvestigationArr">
+                                    <li>{{i.investigation_name}} <span class="fa fa-close" (click)="removeInvestigation(i)"></span></li>
+                                  </div>
+                              </ul>
+                            </div>
+
+                            <div class="patient-daignosis" *ngIf="isCheckedDiagnosisArr.length">
+                              <h6>Diagnosis <span class="fa fa-close"></span></h6>
+                              <ul class="list-unstyled patient-daignosis">
+                                <div *ngFor="let i of isCheckedDiagnosisArr">
+                                    <li>{{i.diagnosis_name}} <span class="fa fa-close" (click)="removeDiagnosis(i)"></span></li>
+                                  </div>
+                              </ul>
+                            </div>
+
+                            <div class="patient-daignosis" *ngIf="isCheckedCompalintArr.length">
+                              <h6>Complaint <span class="fa fa-close" ></span></h6>
+                              <ul class="list-unstyled patient-daignosis">
+                                  <div *ngFor="let i of isCheckedCompalintArr">
+                                    <li>{{i.chief_complaint_name}} <span class="fa fa-close" (click)="removeComplaint(i)"></span></li>
+                                  </div>
+                                <!-- <li>IHD <span class="fa fa-close"></span></li> -->
+                              </ul>
+                            </div>
+
+
+                            <div class="patient-daignosis" *ngIf="ischeckedSeArr.length">
+                                <h6>SE <span class="fa fa-close" ></span></h6>
+                                <ul class="list-unstyled patient-daignosis">
+                                    <div *ngFor="let i of ischeckedSeArr">
+                                      <li>{{i.se_name}} <span class="fa fa-close" (click)="removeSe(i)"></span></li>
+                                    </div>
+                                  <!-- <li>IHD <span class="fa fa-close"></span></li> -->
+                                </ul>
+                              </div>
+
+                            <div class="patient-daignosis" *ngIf="bpCheck">
+                              <h6>BP <span class="fa fa-close"></span></h6>
+                              <ul class="list-unstyled patient-daignosis">
+                                <li>{{bpCheck}} <span class="fa fa-close"  (click)="removeBP(i)"></span></li>
+                              </ul>
+                            </div>
+
+                          </td>
+                          <td style="width: 60%;" class="pr-0">
+                            <div class="prescription-note" *ngIf="ischeckedMedicineArr.length">
+                              <i class="fas fa-prescription"></i>
+                              <div class="medicine-des">
+                                <ul>
+                                  <li *ngFor="let med of ischeckedMedicineArr">
+                                    <h6>{{med.medicine_name}} <span class="fa fa-close" (click)="removeMedicine(med)"></span></h6>
+                                    <p class="d-flex tab-instructions">{{med.medicine_content}} <span class="sep">|</span> <span class="instrution-eat">{{med.medicine_timing}}</span> <a  data-toggle="modal" data-target="#timingModal" (click)="editTomeMedicine(med)"> Edit</a></p>
+                                  </li>
+
+                                </ul>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="2">
+                            <div class="special-Notes">
+                              <h6>Sepcial Notes</h6>
+                              <p>{{special_notes}}</p>
+                            </div>
+                          </td>
+                        </tr>
+                      </table>
+
+                    </div>
+                  </div>
+                  
+                  <div class="card desease-n-section mt-3">
+                    <div class="uploaded-reports">
+                      <h6>Report</h6>
+                      <div *ngFor="let report of patientReportArr;index as i" class="reportBox d-flex align-itens-center">
+                        <!-- <img [src]="{{imgUrl}}{{report.patient_report_file}}"> -->
+                        <div class="d-flex">  
+                          <span>{{i + 1}} . </span>  {{report.patient_report_file}} 
+                          <span>
+                          <a href="{{imgUrl}}{{report.patient_report_file}}" target="_blank" download class="btn btn-primary ml-3"><i class="fa fa-cloud-download"></i></a>
+                        </span>
+                      </div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+            </form>
+            
+          </div>
+      </div>
+    </div>
+</div>
+</mat-drawer-container>
+
+<!-- Modal -->
+<div class="modal fade" id="addpresModal" tabindex="-1" aria-labelledby="addpresModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="modalHeader d-flex justify-content-between">
+          <h5 class="modal-title" id="addpresModalLabel">Medicines</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" class="close-modal"><img src="../../../assets/images/close-icon.svg"/></span>
+        </button>
+        </div>
+
+        <div class="row medicine-lists">
+          <div class="col-md-6" *ngFor="let med of medicineArr;index as i">
+            <div class="form-group form-check">
+              <input type="checkbox" class="form-check-input" id="med{{i}}"  [checked] = "med.isChecked" (click)="medicineCheck($event,med)">
+              <label class="form-check-label" for="med{{i}}">{{med.medicine_name}}</label>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+      <div class="d-flex justify-content-center mb-3">
+        <button type="button" class="btn btn-secondary mr-3" data-dismiss="modal">Add</button>
+        <!-- <button type="button" class="btn btn-primary">Add Medicine</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="complaintModal" tabindex="-1" aria-labelledby="complaintModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="modalHeader d-flex justify-content-between">
+            <h5 class="modal-title" id="complaintModalLabel">Complaint</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true" class="close-modal"><img src="../../../assets/images/close-icon.svg"/></span>
+          </button>
+          </div>
+  
+          <div class="row medicine-lists" >
+            <div class="col-md-6" *ngFor="let comp of complaintArr;index as i">
+              <div class="form-group form-check">
+                  <!-- {{comp.isChecked}} -->
+                <input type="checkbox" class="form-check-input" id="comp{{i}}" [checked] = "comp.isChecked" (click)="complaintCheck($event,comp)">
+                <label class="form-check-label" for="med{{i}}">{{comp.chief_complaint_name}}</label>
+              </div>
+            </div>
+  
+          </div>
+        </div>
+        <div class="d-flex justify-content-center mb-3">
+          <button type="button" class="btn btn-secondary mr-3" data-dismiss="modal">Add</button>
+          <!-- <button type="button" class="btn btn-primary">Add Medicine</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- diagnosis modal  -->
+  <div class="modal fade" id="diagnosisModal" tabindex="-1" aria-labelledby="diagnosisModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="modalHeader d-flex justify-content-between">
+            <h5 class="modal-title" id="diagnosisModalLabel">Diagnosis</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true" class="close-modal"><img src="../../../assets/images/close-icon.svg"/></span>
+          </button>
+          </div>
+  
+          <div class="row medicine-lists" >
+            <div class="col-md-6" *ngFor="let diag of diagnosisArr;index as i">
+              <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="diag{{i}}"  [checked] = "diag.isChecked" (click)="diagnosisCheck($event,diag)">
+                <label class="form-check-label" for="med{{i}}">{{diag.diagnosis_name}}</label>
+              </div>
+            </div>
+  
+          </div>
+        </div>
+        <div class="d-flex justify-content-center mb-3">
+          <button type="button" class="btn btn-secondary mr-3" data-dismiss="modal">Add</button>
+          <!-- <button type="button" class="btn btn-primary">Add Medicine</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- investigation modal  -->
+  <div class="modal fade" id="investigationsModal" tabindex="-1" aria-labelledby="investigationsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="modalHeader d-flex justify-content-between">
+            <h5 class="modal-title" id="investigationsModalLabel">Investigation</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true" class="close-modal"><img src="../../../assets/images/close-icon.svg"/></span>
+          </button>
+          </div>
+  
+          <div class="row medicine-lists" >
+            <div class="col-md-6" *ngFor="let inv of investigationArr;index as i">
+              <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="inv{{i}}"  [checked] = "inv.isChecked" (click)="investigationCheck($event,inv)">
+                <label class="form-check-label" for="med{{i}}">{{inv.investigation_name}}</label>
+              </div>
+            </div>
+  
+          </div>
+        </div>
+        <div class="d-flex justify-content-center mb-3">
+          <button type="button" class="btn btn-secondary mr-3" data-dismiss="modal">Add</button>
+          <!-- <button type="button" class="btn btn-primary">Add Medicine</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SE modal  -->
+  <div class="modal fade" id="seModal" tabindex="-1" aria-labelledby="seModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="modalHeader d-flex justify-content-between">
+            <h5 class="modal-title" id="seModalLabel">SE</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true" class="close-modal"><img src="../../../assets/images/close-icon.svg"/></span>
+          </button>
+          </div>
+  
+          <div class="row medicine-lists" >
+            <div class="col-md-6" *ngFor="let se of seArr;index as i">
+              <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="se{{i}}"  [checked] = "se.isChecked" (click)="seCheck($event,se)">
+                <label class="form-check-label" for="med{{i}}">{{se.se_name}}</label>
+              </div>
+            </div>
+  
+          </div>
+        </div>
+        <div class="d-flex justify-content-center mb-3">
+          <button type="button" class="btn btn-secondary mr-3" data-dismiss="modal">Add</button>
+          <!-- <button type="button" class="btn btn-primary">Add Medicine</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- SE Modal -->
+  <!-- bp modal -->
+  <div class="modal fade" id="bpModal" tabindex="-1" aria-labelledby="bpModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="modalHeader d-flex justify-content-between">
+            <h5 class="modal-title" id="bpModalLabel">BP</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true" class="close-modal"><img src="../../../assets/images/close-icon.svg"/></span>
+          </button>
+          </div>
+  
+          <div class="row " >
+            <div class="col-md-12">
+              <div class="form-group form-check">
+                  <input type="text" class="form-control" placeholder="BP" [(ngModel)]="bpCheck">
+              </div>
+            </div>
+  
+          </div>
+        </div>
+        <div class="d-flex justify-content-center mb-3">
+          <button type="button" class="btn btn-secondary mr-3" data-dismiss="modal">Add</button>
+          <!-- <button type="button" class="btn btn-primary" >Add Medicine</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- Special Notes Modal -->
+<div class="modal fade" id="specialNotesModal" tabindex="-1" aria-labelledby="specialNotesModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="modalHeader d-flex justify-content-between">
+          <h5 class="modal-title" id="specialNotesModalLabel">Special Notes</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" class="close-modal"><img src="../../../assets/images/close-icon.svg"/></span>
+        </button>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <textarea class="form-control" rows="4" placeholder="Review after treatments" [(ngModel)]="special_notes"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex justify-content-center mb-3">
+        <button type="button" class="btn btn-secondary mr-3" data-dismiss="modal">Add</button>
+        <!-- <button type="button" class="btn btn-primary">Save Notes</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+<!-- timingModal -->
+<div class="modal fade" id="timingModal" tabindex="-1" aria-labelledby="timingModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="modalHeader d-flex justify-content-between">
+            <h5 class="modal-title" id="timingModalLabel">Timing Change</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true" class="close-modal"><img src="../../../assets/images/close-icon.svg"/></span>
+          </button>
+          </div>
+  
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <textarea class="form-control" rows="4" placeholder="Review after treatments" [(ngModel)]="isTiming"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-center mb-3">
+          <button type="button" class="btn btn-secondary mr-3" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="timingUpdate()">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- File Upload Modal -->
+
+<div class="modal fade" id="uploadFileModal" tabindex="-1" aria-labelledby="uploadFileModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="modalHeader d-flex justify-content-between">
+          <h5 class="modal-title" id="uploadFileModalLabel">Upload Files</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" class="close-modal"><img src="../../../assets/images/close-icon.svg"/></span>
+        </button>
+        </div>
+
+        <div class="row fileuploadr">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="exampleFormControlFile1">Upload Files/Reports ETC</label>
+              <input type="file" class="form-control-file" id="exampleFormControlFile1" (change)="handleFileInput($event.target.files)">
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="d-flex justify-content-center mb-3">
+        <button type="button" class="btn btn-secondary mr-3" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="uploadFileToActivity()" data-dismiss="modal">Upload</button>
+      </div>
+    </div>
+  </div>
+</div>

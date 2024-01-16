@@ -1,0 +1,134 @@
+<mat-drawer-container class="admincon-container" autosize>
+    <mat-drawer #drawer class="adminside-sidenav" mode="side">
+        <app-clinic-sidenavbar></app-clinic-sidenavbar>
+    </mat-drawer>
+    <button class="togglebutton" mat-button (click)="drawer.toggle()">
+      <i class="icons" (click)="clickEvent()" [ngClass]="status ? 'icon-close' : 'icon-menu'"></i>
+    </button>
+    <div class="right-section">
+
+        <app-clinic-header></app-clinic-header>
+      <div class="admin-main-container">
+        <h3>Doctor</h3>
+        <div class="dashboard-container mt-4">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card shadow-sm rounded mb-4">
+                <div class="card-header">
+                  <div class="d-flex justify-content-between">
+                    <h6>Doctor List</h6>
+                    <div class="filterfields">
+                      <div class="resion-select">
+  
+                        <button type="button" class="btn btn-primary" [routerLink]="['/create-doctor']">Create
+                          Doctor</button>
+                      </div>
+                    </div>
+                    <div class="filterfields">
+                      <input class="form-control" matInput placeholder="Filter" #input>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="card-body p-2">
+                  <div class="mat-elevation-z8" style="box-shadow: none;">
+                    <table mat-table [dataSource]="dataSource">
+
+                        <!-- Position Column -->
+                        <ng-container matColumnDef="clinic_id">
+                          <th mat-header-cell *matHeaderCellDef> Clinic Name </th>
+                          <td mat-cell *matCellDef="let element"> {{element.clinic_name}} </td>
+                        </ng-container>
+      
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="doctor_name">
+                          <th mat-header-cell *matHeaderCellDef> Doctor Name </th>
+                          <td mat-cell *matCellDef="let element"> {{element.doctor_name}} </td>
+                        </ng-container>
+      
+                        <!-- Weight Column -->
+                        <ng-container matColumnDef="doctor_speciality">
+                          <th mat-header-cell *matHeaderCellDef>Speciality </th>
+                          <td mat-cell *matCellDef="let element"> {{element.doctor_speciality}} </td>
+                        </ng-container>
+      
+                        <!-- Symbol Column -->
+                        
+      
+                        <ng-container matColumnDef="specialised_treatment">
+                          <th mat-header-cell *matHeaderCellDef>  Specialised Treatment </th>
+                          <td mat-cell *matCellDef="let element"> {{element.specialised_treatment}} </td>
+                        </ng-container>
+      
+                        <ng-container matColumnDef="industry_experience">
+                          <th mat-header-cell *matHeaderCellDef> Industry Experience </th>
+                          <td mat-cell *matCellDef="let element"> {{element.industry_experience}} </td>
+                        </ng-container>
+      
+                        <ng-container matColumnDef="professional_bio">
+                          <th mat-header-cell *matHeaderCellDef> Professional Bio</th>
+                          <td mat-cell *matCellDef="let element"> {{element.professional_bio}} </td>
+                        </ng-container>
+
+                        
+      
+                       
+                        <ng-container matColumnDef="action">
+                          <th mat-header-cell *matHeaderCellDef>  Action </th>
+                          <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.active_status == 1 ? true : false" (click)="updateDoctorData(element)"></mat-slide-toggle>&nbsp;
+                             <i class="fa fa-edit" style="font-size:24px" [routerLink]="['/create-doctor', element.id]"></i>&nbsp;
+                            <i class="fa fa-trash" style="font-size:24px;color:red" data-toggle="modal" data-target="#exampleModal" (click)="deleteDoctor(element)"></i>
+                          </td>
+      
+                        </ng-container>
+      
+                        
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                      </table>
+                  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                    aria-label="Select page of periodic elements"
+                    [length]="200" [pageSize]="5">
+                  </mat-paginator>
+                </div>
+                </div>
+                <!-- Button trigger modal -->
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+  
+      <app-footer> </app-footer>
+    </div>
+  </mat-drawer-container>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Delete Doctor</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h5>Do YOU WANT TO DELETE ??</h5>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="deleteDoctorByid()" data-dismiss="modal">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+  <div class="pageloader" *ngIf="isloading">
+    <img src="../../../assets/images/loader.svg"/>
+  </div>
+
+  

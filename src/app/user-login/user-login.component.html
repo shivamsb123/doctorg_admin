@@ -1,0 +1,82 @@
+<div class="login-container">
+    <div class="row h-100 mx-0">
+        <div class="col-sm-12 px-0 my-auto">
+            <div class="container">
+                <header class="text-center">
+                    <div class="d-flex justify-content-center align-items-center">
+                        <div class="logo-txt text-center">
+                            <img src="/assets/images/logo.svg" style="max-width: 150px;"/>
+                        </div>
+                    </div>
+                </header>
+            </div>
+            <div class="container">
+                <div class="login-maxW mx-auto">
+                    <form [formGroup]="loginform">
+                        <div class="row">
+                            <div class="col-md-6 col-lg-6">
+                                <div class="login-content">
+                                    <h2>Login as a Clinic</h2>
+
+                                    <div class="form-group">    
+                                        <i class="icon-user icons"></i>
+                                        <input type="text" class="form-control" formControlName="userName"
+                                            placeholder="Enter Email" />
+                                        <div class="text-danger"
+                                            *ngIf="loginform.get('userName')?.hasError('required') && loginform.get('userName')?.touched">
+                                            Email is required</div>
+                                        <div class="text-danger"
+                                            *ngIf="loginform.get('userName')?.hasError('minlength') && loginform.get('userName')?.touched">
+                                            First Name should be of 5 character</div>
+                                        <div class="text-danger"
+                                            *ngIf="loginform.get('userName')?.hasError('maxlength') && loginform.get('userName')?.touched">
+                                            First Name should maximum have 20 character</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <i class="icon-lock icons"></i>
+                                        <input type="password" class="form-control" formControlName="password"
+                                            placeholder="Password" [type]="hideP ? 'password' : 'text'" />
+                                        <div class="text-danger"
+                                            *ngIf="loginform.get('password')?.hasError('required') && loginform.get('password')?.touched">
+                                            Password is required
+                                        </div>                                            
+                                        <div class="text-danger"
+                                            *ngIf="loginform.get('password')?.hasError('minlength') && loginform.get('password')?.touched">
+                                            Password should be of 6 digit</div>
+
+
+                                        <div class="text-danger"
+                                            *ngIf="loginform.get('password')?.hasError('maxlength') && loginform.get('password')?.touched">
+                                            Password should maximum have 20 digit</div>
+                                          
+                                            <!-- <mat-icon matSuffix (click)="hideP = !hideP">{{
+                                                hideP ? "visibility_off" : "visibility"
+                                              }}</mat-icon> -->
+
+                                    </div>
+                                    <!-- <div class="remember">
+                                        <mat-checkbox class="re-checkbox">Remember</mat-checkbox>
+                                    </div> -->
+
+                                    <button class="btn btn-block btn-primary" (click)="onSubmit()"
+                                        [disabled]="!loginform.valid">Login</button>
+                                    <!-- <div class="forgotpass"><a href="#">Forgot Your Password ?</a></div> -->
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-lg-6 mobilenone" style="background:#216CC9;">
+                                <div class="h-100 d-flex px-3">
+                                    <div class="my-auto">
+                                        <img src="/assets/images/login-bg.svg" style="max-width: 100%;" />
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

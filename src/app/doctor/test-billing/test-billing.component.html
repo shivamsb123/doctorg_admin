@@ -1,0 +1,175 @@
+<mat-drawer-container class="admincon-container" autosize>
+  <mat-drawer #drawer class="adminside-sidenav" mode="side">
+    <app-clinic-sidenavbar></app-clinic-sidenavbar>
+  </mat-drawer>
+  <button class="togglebutton" mat-button (click)="drawer.toggle()">
+    <i class="icons" (click)="clickEvent()" [ngClass]="status ? 'icon-close' : 'icon-menu'"></i>
+  </button>
+  <div class="right-section">
+    <app-clinic-header></app-clinic-header>
+
+  <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading ...</p>
+  </ngx-spinner>
+    <div class="admin-main-container">
+      <div class="dashboard-container mt-4">
+        <h3 class="mb-3">Testing Bill</h3>
+
+        <div class="row">
+          <div class="container col-md-12">
+            <form [formGroup]="testBillingForm" (ngSubmit)="billingSubmit(testBillingForm.value)">
+            <div class="card shadow-sm">
+              <div class="card-body">
+
+                <div class="row">
+                  <div class="col-md-2">
+                    <label> Pateint Name</label>
+                    <!-- <select id='peeps' name='people' class="form-control" formControlName="name">
+                      <option *ngFor="let item of appointmentListArr" [value]="item.name">
+                        {{item.name}}
+                      </option>
+                    </select> -->
+
+                    <mat-form-field class="width" *ngIf="appointmentListArr.length">
+                      <input
+                        matInput
+                        placeholder="Patient"
+                        class="form-control"
+                        aria-label="Country"
+                        [matAutocomplete]="auto"
+                        [formControl]="name"
+                        required
+                      />
+                      <mat-autocomplete #auto="matAutocomplete" style="top:200px">
+                        <mat-option
+                          *ngFor="let country of filteredCountry | async "
+                          [value]="country.name"
+                        >
+                          <span>{{ country.name }} </span>
+                        </mat-option>
+                      </mat-autocomplete>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="col-md-2">
+                    <label> Doctor Name</label>
+                    <select  name='people' formControlName="doctor_name" class="form-control">
+                      <option *ngFor="let item of doctorListArr" [value]="item.doctor_name" >
+                        {{item.doctor_name}}
+                      </option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-2">
+                    <label>Test Name</label>
+                    <select id='peeps' name='people' formControlName="test_name" class="form-control">
+                      <option *ngFor="let item of testArr" [ngValue]="item.id">
+                        {{item.test_name}}
+                      </option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-2 align-self-end">
+                    <button type="submit" class="btn btn-primary">Add</button>
+                  </div>
+                  
+                </div>
+              </div>
+            </div>
+          </form>
+          </div>
+        </div>
+
+        <div class="card shadow-sm mt-3" id="demo">
+          <div class="card-body">
+            <div class="printinfo">
+              <table class="table tableprint">
+                <tr>
+                  <td><h4>{{singleDoctorDataArr.clinic_name}}</h4></td>
+                </tr>
+                <tr>
+                  <td><h5>{{singleDoctorDataArr.doctor_name}}</h5></td>
+                </tr>
+                <tr>
+                  <td><p>{{singleDoctorDataArr.clinic_address}}</p></td>
+                </tr>
+              </table>
+            </div>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col">Sr</th>
+                  <th scope="col">Patient Name</th>
+                  <th scope="col">Doctor Name</th>
+                  <th scope="col">Test Name</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">Discount</th>
+                  <th scope="col">Total</th>  
+                  <th scope="col" *ngIf="isDiscountValue">Action</th>  
+                </tr>
+              </thead>
+              <tbody >
+                <tr *ngFor="let test of testBillingArr;index as i">
+                  <th scope="row">{{i+1}}</th>
+                  <td>{{test.patient_name}}</td>
+                  <td>{{test.doctor_name}}</td>
+                  <td>{{test.test_name}}</td>
+                  <td>{{test.price}}</td>
+                  <td class="text-center"><span *ngIf="isDiscountValue"><input type="text" (input)="discount($event,test,i)" class="form-control" style="max-width:130px;display: inline-block;"> </span> &nbsp; {{test.discount}}</td>
+                  <td>{{test.total}}</td>
+                  <td *ngIf="isDiscountValue">
+                    <i class="fa fa-trash ml-2" style="font-size:18px;color:red" (click)="deleteBilling(test)"></i>
+                  </td>
+                </tr>
+                <tr *ngIf="testBillingArr.length">
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+  
+                  <td>Total Amount</td>
+                  <td>{{isTotalSum}}</td>
+  
+  
+  
+                </tr>
+              </tbody>
+            </table>
+            <div class="thnkyv"><span style="display: inline-block; border-top: 1px dashed #000;  border-bottom: 1px dashed #000; color: #000;">Thank you for your visit</span></div>
+          </div>
+        </div>
+        </div>
+
+        <div class="text-center mt-3">
+          <button type="button" class="btn btn-success" data-toggle="modal" data-target="#complaintModal" (click)="submitBillingData()">Save & Print</button>
+        </div>
+        </div>
+  </div>
+  </mat-drawer-container>
+  <!-- Modal -->
+<div class="modal fade" id="complaintModal" tabindex="-1" aria-labelledby="complaintModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="modalHeader d-flex justify-content-between">
+          <h5 class="modal-title" id="complaintModalLabel">Testing Bill</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" class="close-modal"><img src="../../../assets/images/close-icon.svg"/></span>
+        </button>
+        </div>
+
+        <div class="row medicine-lists" >
+          <div>
+            <h5 style="margin-left: 20px;">Do You Want to print ??  </h5>
+          </div>
+
+        </div>
+      </div>
+      <div class="d-flex justify-content-center mb-3">
+        <button type="button" class="btn btn-secondary mr-3" data-dismiss="modal" (click)="resetForm()">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="onPrint('demo')">Print</button>
+      </div>
+    </div>
+  </div>
+</div>

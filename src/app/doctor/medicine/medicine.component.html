@@ -1,0 +1,73 @@
+<mat-drawer-container class="admincon-container" autosize>
+  <mat-drawer #drawer class="adminside-sidenav" mode="side">
+    <app-doctor-sidenavbar></app-doctor-sidenavbar>
+  </mat-drawer>
+  <button class="togglebutton" mat-button (click)="drawer.toggle()">
+    <i class="icons" (click)="clickEvent()" [ngClass]="status ? 'icon-close' : 'icon-menu'"></i>
+  </button>
+  <div class="right-section">
+    <app-doctor-header></app-doctor-header>
+    <!-- <app-navbar></app-navbar> -->
+    <div class="admin-main-container">
+      <div class="dashboard-container mt-4">
+        <h3 class="mb-3">Add Medicine</h3>
+        <!-- <div class="row">
+          <div class="col-md-12">
+            <div class="card shadow-sm rounded mb-4">
+            </div>
+          </div>
+        </div> -->
+
+
+        <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
+        <div class="row">
+          <div class="container col-md-12">
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <form [formGroup]="orderForm">
+                  <div class="selectDeseases">
+                    <label>Select Disease</label>
+                    <select id='peeps' name='people' class="form-control" formControlName="disease_name">
+                      <!-- <option>Select disease</option> -->
+                      <option *ngFor="let item of medicineArr" [value]="item.disease_name">
+                        {{item.disease_name}}
+                      </option>
+                  </select>
+                  </div>
+
+                    <div class="medi-form">
+                  <div class="row">
+                          <div class="col-md-9 mb-3" formArrayName="items"
+                          *ngFor="let item of orderForm.get('items')?.controls; let i = index;">
+                            <div [formGroupName]="i" class="row">
+                              <div class="col-md-4">
+                                <label>Add Medicine Name</label>
+                                <input formControlName="medicine_name" class="form-control" placeholder="Name">
+                              </div>
+                              <div class="col-md-4">
+                                <label>Add Medicine Content</label>
+    
+                              <input formControlName="medicine_content" class="form-control" placeholder="Content">
+    
+                              </div>
+                              <div class="col-md-4">
+                                <label> Medicine Timing</label>
+                                <input formControlName="medicine_timing" class="form-control" placeholder="Time">
+                              </div>
+                            </div>
+                          </div>
+                        <div class="col-md-3 align-self-end mb-3">
+                          <button (click)="addItem()" class="btn btn-success rounded-pill">Add More</button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div>
+                      <button type="submit" class="btn btn-primary" (click)="submitForm(orderForm.value)">submit</button>
+                    </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+       

@@ -1,0 +1,95 @@
+<div class="admin-sidenav">
+    <div class="inner-logo">
+        <span class="short-logo"><img src="../../assets/images/logo.svg" style="width: 60px;" /></span>
+        <span class="long-logo"><img src="../../assets/images/logo.svg" style="width: 100px;" /></span>
+    </div>
+
+    <div class="sidemenubar">
+        <ul class="list-unstyled">
+            <li>
+                <a routerLink="/doctor-dashboard"><i class="icon-grid icons"></i> <span>Dashboard</span></a>
+            </li>
+            <li>
+                <a routerLink="/appointment"><i class="fa fa-calendar"></i> <span>AppointMent</span></a>
+            </li>
+            <li>
+                <a (click)="tabToggle1()" [ngClass]="{activemenu : showTab1===true}">
+                    <i class="fas fa-prescription"></i> <span>Prescription Master</span></a>
+                <div *ngIf="showTab1" class="sunsidenav">
+                    <div class="closesbmenu" (click)="clsubmenu()">
+                        <mat-icon aria-hidden="false" aria-label="close icon">close</mat-icon>
+                    </div>
+                    <ul class="list-unstyled">
+                        <li><a routerLink="/diagnosis-list"><i class="fa fa-diagnoses"></i> Diagnosis</a></li>
+                        <li><a routerLink="/chief-complaint-list"><i class="fa fa-comments"></i> Chief Complaint</a></li>
+                        <li><a routerLink="/investigation-list"><i class="fa fa-search"></i> Investigation</a></li>
+                        <li><a routerLink="/se-list"><i class="fa fa-plus-square"></i> SE</a></li>
+                        <li><a routerLink="/disease-list"><i class="fa fa-disease"></i> Enter Disease</a></li>
+                        <li><a routerLink="/medicine-list"><i class="fa fa-pills"></i> Medicine</a></li>
+                        <!-- <li><a routerLink="/create-prescription"><i class="fa fa-prescription"></i> Create prescription</a></li> -->
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <a routerLink="/day-book"><i class="fa fa-book"></i> <span>Day Books</span></a>
+            </li>
+            
+            <!-- <li>
+            <a (click)="tabToggle2()" [ngClass]="{activemenu : showTab2===true}">
+                <i class="icon-people icons"></i> <span>Manage Users</span></a>
+            <div *ngIf="showTab2" class="sunsidenav">
+                <div class="closesbmenu" (click)="clsubmenu()">
+                    <mat-icon aria-hidden="false" aria-label="close icon">close</mat-icon>
+                </div>
+                <ul class="list-unstyled">
+                    <li><a href="#"><i class="icon-people icons"></i> Manage User</a></li>
+                    <li><a href="#"><i class="icon-user-follow icons"></i> Manage Admin Account</a></li>
+                </ul>
+            </div>
+        </li> -->
+  
+
+
+
+            <!-- <li>
+                <a (click)="tabToggle4()" [ngClass]="{activemenu : showTab4===true}">
+                    <i class="icon-speech icons"></i> <span>Newsletter</span>
+                </a>
+                <div *ngIf="showTab4" class="sunsidenav">
+                    <div class="closesbmenu" (click)="clsubmenu()">
+                        <mat-icon aria-hidden="false" aria-label="close icon">close</mat-icon>
+                    </div>
+                    <ul class="list-unstyled">
+                        <li><a href="#"><i class="icon-speech icons"></i> Manage Newsletters</a></li>
+                        <li><a href="#"><i class="icon-lock icons"></i> Manage subscribers</a></li>
+                    </ul>
+                </div>
+            </li> -->
+
+
+
+            <!-- <li *ngIf="decoded?.roleId==1"><a routerLink="/details"> <i class="fa fa-building" aria-hidden="true"></i><span>ब्लॉक जोड़ें</span></a>    
+            </li> -->
+    
+                
+
+                
+                <!-- <a (click)="tabToggle5()" [ngClass]="{activemenu : showTab5===true}">
+                    <i class="icon-pencil icons"></i> <span>Form Themes</span>
+                </a> -->
+                <!-- <div *ngIf="showTab5" class="sunsidenav">
+                    <div class="closesbmenu" (click)="clsubmenu()">
+                        <mat-icon aria-hidden="false" aria-label="close icon">close</mat-icon>
+                    </div>
+                    <ul class="list-unstyled">
+                        <li><a routerLink="/formsTheme"><i class="icon-speech icons"></i> Form Themes</a></li>
+                        <li><a routerLink="/button-model"><i class="icon-game-controller icons"></i> Buttons &
+                                Models</a></li>
+                        <li><a routerLink="/TablesDesign"><i class="icon-game-controller icons"></i> Tables</a></li>
+                        <li><a routerLink="/Datatable"><i class="icon-game-controller icons"></i> Data Tables</a></li>
+                    </ul>
+                </div> -->
+            
+        </ul>
+    </div>
+</div>

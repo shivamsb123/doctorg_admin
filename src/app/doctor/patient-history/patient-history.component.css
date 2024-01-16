@@ -1,0 +1,6 @@
+.historydate-view {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.historydate-view .history-date {font-weight: 600;}

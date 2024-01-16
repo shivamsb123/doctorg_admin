@@ -1,0 +1,27 @@
+<mat-drawer-container class="admincon-container" autosize>
+    <mat-drawer #drawer class="adminside-sidenav" mode="side">
+      <app-doctor-sidenavbar></app-doctor-sidenavbar>
+    </mat-drawer>
+      <button class="togglebutton" mat-button (click)="drawer.toggle()"> 
+      <i class="icons" (click)="clickEvent()" [ngClass]="status ? 'icon-close' : 'icon-menu'"></i>
+    </button> 
+    <div class="right-section">
+        <app-doctor-header></app-doctor-header>
+        <div class="admin-main-container">
+            <h3>History</h3>
+            <div class="dashboard-container mt-4">
+
+                <div class="card shadow-sm mb-2" *ngFor="let pre of prescriptionArr">
+                    <div class="card-body py-2">
+                        <div class="historydate-view">
+                            <div class="history-date">{{pre.createdAt | date}}</div>
+                            <button class="btn btn-primary" type="button" routerLink="/view-history" [queryParams]="{doctor_id:pre.doctor_id,patient_id:pre.patient_id,id:pre.id,mobile_number:appointmentData.mobile_number,name:appointmentData.name,token_number:appointmentData.token_number}">View</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <app-footer> </app-footer>
+    </div>
+</mat-drawer-container>
